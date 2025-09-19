@@ -4,4 +4,12 @@
   <h6>Movie Name 2 - {{ movieName }}</h6>
   <h6>Student first name is {{ studentDetails.firstName }}.</h6>
   <h6>Student last name is {{ studentDetails.lastName }}</h6>
+  <p>Movie Name : <input type="text" value="{{ movieName }}" /></p>
+  <p>Movie Name : <input type="text" [value]="movieName" /></p>
+  <p>
+    <button type="button" (click)="displayMovie()">
+      Click to display Movie Name
+    </button>
+    {{ movieName2 }}
+  </p>
 </div>

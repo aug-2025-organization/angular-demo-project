@@ -1,0 +1,8 @@
+<div class="container">
+  <h4>Counter Component</h4>
+  <button class="btn btn-danger" (click)="decrement()">-</button>
+
+  <!-- <input type="text" [value]="counter" class="mx-2" size="3" /> -->
+   <input type="text" [(ngModel)]="counter" class="mx-2" size="3" />
+  <button class="btn btn-primary" (click)="increment()">+</button>
+</div>

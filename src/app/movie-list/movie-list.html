@@ -1,0 +1,29 @@
+<div class="container mt-4 bg-dark p-4 text-white round">
+  <h2>Movie List</h2>
+  <div class="row">
+    @for(movie of allMovies; track movie.id) {
+    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+      <div class="card h-100 round">
+        <img
+          [src]="movie.posterUrl"
+          class="card-img-top round"
+          alt="{{ movie.title }}"
+          width="150"
+          height="200"
+        />
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ movie.title }} ({{ movie.releaseYear }})
+          </h5>
+          <p class="card-text">{{ movie.description }}</p>
+          <p class="card-text"><strong>Genre:</strong> {{ movie.genre }}</p>
+          <p class="card-text">
+            <strong>Rating:</strong> {{ movie.rating }}/10
+          </p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+>
