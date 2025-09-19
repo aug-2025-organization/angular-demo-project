@@ -3,7 +3,10 @@
   <div class="row">
     @for(movie of allMovies; track movie.id) {
     <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-      <div class="card h-100 round">
+      <div
+        class="card h-100 round"
+        [ngClass]="movie.releaseYear < 1995? 'bg-warning': 'bg-secondary text-white'"
+      >
         <img
           [src]="movie.posterUrl"
           class="card-img-top round"
@@ -14,6 +17,12 @@
         <div class="card-body">
           <h5 class="card-title">
             {{ movie.title }} ({{ movie.releaseYear }})
+            <!-- <span *ngIf="movie.releaseYear<1995">This is an old movie</span> -->
+            @if(movie.releaseYear < 1995) {
+            <span class="badge bg-danger">Old Movie</span>
+            } @else{
+            <span class="badge bg-success">New Movie</span>
+            }
           </h5>
           <p class="card-text">{{ movie.description }}</p>
           <p class="card-text"><strong>Genre:</strong> {{ movie.genre }}</p>

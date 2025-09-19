@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Movie } from './movie.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'movie-list',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
 })
