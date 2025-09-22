@@ -1,0 +1,11 @@
+<div class="container">
+  <h2>Student List</h2>
+  <ul class="list-group">
+    @for(eachStudent of allStudents; track $index) {
+    <student-item
+      [studData]="eachStudent"
+      (studRemoveEvent)="parentRemoveStud($event)"
+    ></student-item>
+    }
+  </ul>
+</div>
