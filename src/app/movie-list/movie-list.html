@@ -6,6 +6,7 @@
       <div
         class="card h-100 round"
         [ngClass]="movie.releaseYear < 1995? 'bg-warning': 'bg-secondary text-white'"
+        
       >
         <img
           [src]="movie.posterUrl"
@@ -14,7 +15,7 @@
           width="150"
           height="200"
         />
-        <div class="card-body">
+        <div class="card-body" appHover="lightgreen">
           <h5 class="card-title">
             {{ movie.title }} ({{ movie.releaseYear }})
             <!-- <span *ngIf="movie.releaseYear<1995">This is an old movie</span> -->

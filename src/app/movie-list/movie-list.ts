@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Movie } from './movie.model';
 import { CommonModule } from '@angular/common';
+import { AppHover } from '../directives/app-hover';
 
 @Component({
   selector: 'movie-list',
-  imports: [CommonModule],
+  imports: [CommonModule, AppHover],
   templateUrl: './movie-list.html',
   styleUrl: './movie-list.css',
 })

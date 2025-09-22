@@ -1,6 +1,6 @@
 <div class="container">
   <h4>List of Dishes</h4>
-  <table class="table table-bordered table-striped">
+  <table>
     <thead class="table-dark">
       <tr>
         <th>Dish ID</th>
@@ -12,7 +12,7 @@
     </thead>
     <tbody>
       @for(dish of allDishes; track $index) {
-      <tr>
+      <tr appHover="lightblue">
         <td>{{ dish.dishId }}</td>
         <td><img [src]="dish.dishImageUrl" width="80px" height="50px" /></td>
         <td>{{ dish.dishName }}</td>

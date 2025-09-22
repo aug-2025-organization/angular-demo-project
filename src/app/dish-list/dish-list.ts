@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Dish } from './dish.model';
+import { AppHover } from '../directives/app-hover';
 
 @Component({
   selector: 'dish-list',
-  imports: [],
+  imports: [AppHover],
   templateUrl: './dish-list.html',
   styleUrl: './dish-list.css',
 })

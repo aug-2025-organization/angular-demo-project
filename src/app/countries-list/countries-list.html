@@ -3,7 +3,7 @@
   <ul class="list-group">
     <!-- <li *ngFor="let eachCountry of countries" class="list-group-item"> -->
     @for (eachCountry of countries; track $index) {
-    <li class="list-group-item">{{ eachCountry }}</li>
+    <li class="list-group-item" appHover="lightpink">{{ eachCountry }}</li>
     } @empty {
     <li class="list-group-item">No Countries Found</li>
     }
