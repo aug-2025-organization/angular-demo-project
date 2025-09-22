@@ -13,11 +13,13 @@
     <tbody>
       @for(dish of allDishes; track $index) {
       <tr appHover="lightblue">
-        <td>{{ dish.dishId }}</td>
-        <td><img [src]="dish.dishImageUrl" width="80px" height="50px" /></td>
-        <td>{{ dish.dishName }}</td>
-        <td>{{ dish.dishPrice }}</td>
-        <td>{{ dish.dishDescription }}</td>
+        <td appHover="lightblue">{{ dish.dishId }}</td>
+        <td appHover="lightblue">
+          <img [src]="dish.dishImageUrl" width="80px" height="50px" />
+        </td>
+        <td appHover="lightblue">{{ dish.dishName }}</td>
+        <td appHover="lightblue">{{ dish.dishPrice }}</td>
+        <td appHover="lightblue">{{ dish.dishDescription }}</td>
       </tr>
       } @empty {
       <tr>
