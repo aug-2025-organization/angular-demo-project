@@ -7,6 +7,7 @@ import { DishList } from './dish-list/dish-list';
 import { MovieList } from './movie-list/movie-list';
 import { StudentList } from './student-list/student-list';
 import { BookList } from "./books/book-list/book-list";
+import { BookAdd } from "./books/book-add/book-add";
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ import { BookList } from "./books/book-list/book-list";
     DishList,
     MovieList,
     StudentList,
-    BookList
+    BookList,
+    BookAdd
 ],
   templateUrl: './app.html',
   styleUrl: './app.css',
