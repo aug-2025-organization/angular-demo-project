@@ -29,7 +29,7 @@
         </td>
         <td>{{ eachBook.bookPublished | date: 'shortDate' }}</td>
         <td>{{ eachBook.bookPrice | currency: 'INR': 'symbol'}}</td>
-        <td>{{ eachBook.bookPrice | discount: 5 }}</td>
+        <td>{{ eachBook.bookPrice | discount: 5 | currency: 'INR': 'code'}}</td>
         <td>
           <button
             type="button"

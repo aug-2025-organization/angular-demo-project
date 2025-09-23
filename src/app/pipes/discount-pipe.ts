@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'discount',
 })
 export class DiscountPipe implements PipeTransform {
-  transform(value: number, ...args: number[]): unknown {
+  transform(value: number, ...args: number[]): number {
     return value - (value * args[0]) / 100;
   }
 }
