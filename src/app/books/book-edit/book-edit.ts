@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthorService } from '../../authors/author.service';
-import { Author } from '../author.model';
-import { CharacterService } from '../../characters/character.service';
+import { Component } from '@angular/core';
 import { Character } from '../character.model';
 import { Book } from '../book.model';
-import { FormsModule } from '@angular/forms';
+import { Author } from '../author.model';
+import { AuthorService } from '../../authors/author.service';
+import { CharacterService } from '../../characters/character.service';
 import { BookService } from '../book.service';
 
 @Component({
-  selector: 'book-add',
-  imports: [FormsModule],
-  templateUrl: './book-add.html',
-  styleUrl: './book-add.css',
+  selector: 'book-edit',
+  imports: [],
+  templateUrl: './book-edit.html',
+  styleUrl: './book-edit.css',
 })
-export class BookAdd implements OnInit {
+export class BookEdit {
   selectedCharacterId: number = 0;
   selectedCharacters: Character[] = [];
   newBook: Book = {
@@ -44,16 +43,6 @@ export class BookAdd implements OnInit {
     this.allCharacters = this.characterService.getAllCharacters();
   }
 
-  handleFormSubmit() {
-    let author: Author | undefined = this.authorService.getAAuthor(
-      this.newBook.author!.authorId
-    );
-    this.newBook.author = author;
-    this.newBook.allCharacters = this.selectedCharacters;
-    console.log(this.newBook);
-    this.bookService.addBook(this.newBook);
-  }
-
   addCharacter() {
     let fetchedCharacter: any = this.characterService.getACharacter(
       this.selectedCharacterId
@@ -65,11 +54,6 @@ export class BookAdd implements OnInit {
     let index = this.selectedCharacters.findIndex(
       (chars) => chars.characterId == characterId
     );
-    console.log(index);
     this.selectedCharacters.splice(index, 1);
-  }
-
-  displayTempTitle(tempTitle: any) {
-    console.log(tempTitle);
   }
 }

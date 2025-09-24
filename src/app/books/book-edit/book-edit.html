@@ -1,0 +1,95 @@
+<div class="container">
+  <form>
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3>EDIT BOOK</h3>
+      </div>
+      <div class="card-body">
+        <div class="my-3">
+          <label for="bTitle" class="form-label">Book Title:</label>
+          <input type="text" class="form-control" id="bTitle" />
+        </div>
+        <div class="mb-3">
+          <label for="bAuthor" class="form-label">Book Author:</label>
+          <select class="form-control" id="bAuthor">
+            @for(eachAuthor of allAuthors; track $index){
+            <option ngValue="eachAuthor.authorId">
+              {{ eachAuthor.authorFirstname }} {{ eachAuthor.authorLastname }}
+            </option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="bCategory" class="form-label">Book Category:</label>
+          <select class="form-control" id="bCategory">
+            <option value="Fantasy">Fantasy</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Comedy">Comedy</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="bPublished" class="form-label">Book Published:</label>
+          <input type="date" class="form-control" id="bPublished" />
+        </div>
+        <div class="mb-3">
+          <label for="bPrice" class="form-label">Book Price:</label>
+          <input type="text" class="form-control" id="bPrice" />
+        </div>
+        <div class="mb-3">
+          <label for="bImage" class="form-label">Book Image Url:</label>
+          <input type="text" class="form-control" id="bImage" />
+        </div>
+
+        <div class="mb-3">
+          <label for="bAuthor" class="form-label">Book Character:</label>
+          <select class="form-control" id="bCharacter">
+            @for(eachCharacter of allCharacters; track $index){
+            <option value="{{ eachCharacter.characterId }}">
+              {{ eachCharacter.characterFirstname }} {{
+              eachCharacter.characterLastname }}
+            </option>
+            }
+          </select>
+          <div class="d-grid">
+            <button
+              type="button"
+              class="btn btn-primary btn-block my-2"
+              (click)="addCharacter()"
+            >
+              +
+            </button>
+          </div>
+
+          <table class="table table-striped">
+            <tbody>
+              @for(eachChar of selectedCharacters; track $index){
+              <tr>
+                <td>{{ eachChar.characterId }}</td>
+                <td>{{ eachChar.characterFirstname }}</td>
+                <td>{{ eachChar.characterLastname }}</td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-small"
+                    (click)="removeChar(eachChar.characterId)"
+                  >
+                    X
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer bg-primary text-white">
+        <button type="submit" class="btn btn-light text-primary mx-2">
+          UPDATE
+        </button>
+        <button type="reset" class="btn btn-light text-primary mx-2">
+          CLEAR
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

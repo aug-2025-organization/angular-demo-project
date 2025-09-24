@@ -4,7 +4,7 @@ import { Character } from './character.model';
 export interface Book {
   bookId: number;
   bookTitle: string;
-  author: Author;
+  author: Author | undefined;
   bookCategory: string;
   bookPublished: Date;
   bookPrice: number;
