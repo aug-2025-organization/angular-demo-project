@@ -1,5 +1,5 @@
 <div class="container">
-  <form>
+  <form [formGroup]="myReactiveForm" (ngSubmit)="handleFormSubmit()">
     <div class="card">
       <div class="card-header bg-primary text-white">
         <h3>EDIT BOOK</h3>
@@ -7,13 +7,21 @@
       <div class="card-body">
         <div class="my-3">
           <label for="bTitle" class="form-label">Book Title:</label>
-          <input type="text" class="form-control" id="bTitle" />
+          <input
+            type="text"
+            class="form-control"
+            id="bTitle"
+            formControlName="bookTitle"
+          />
         </div>
         <div class="mb-3">
           <label for="bAuthor" class="form-label">Book Author:</label>
-          <select class="form-control" id="bAuthor">
+          <select class="form-control" id="bAuthor" formControlName="author">
             @for(eachAuthor of allAuthors; track $index){
-            <option ngValue="eachAuthor.authorId">
+            <option
+              [ngValue]="eachAuthor"
+              [selected]="eachAuthor==myReactiveForm.get('author')?.value"
+            >
               {{ eachAuthor.authorFirstname }} {{ eachAuthor.authorLastname }}
             </option>
             }
@@ -21,7 +29,11 @@
         </div>
         <div class="mb-3">
           <label for="bCategory" class="form-label">Book Category:</label>
-          <select class="form-control" id="bCategory">
+          <select
+            class="form-control"
+            id="bCategory"
+            formControlName="bookCategory"
+          >
             <option value="Fantasy">Fantasy</option>
             <option value="Thriller">Thriller</option>
             <option value="Comedy">Comedy</option>
@@ -29,15 +41,30 @@
         </div>
         <div class="mb-3">
           <label for="bPublished" class="form-label">Book Published:</label>
-          <input type="date" class="form-control" id="bPublished" />
+          <input
+            type="date"
+            class="form-control"
+            id="bPublished"
+            formControlName="bookPublished"
+          />
         </div>
         <div class="mb-3">
           <label for="bPrice" class="form-label">Book Price:</label>
-          <input type="text" class="form-control" id="bPrice" />
+          <input
+            type="text"
+            class="form-control"
+            id="bPrice"
+            formControlName="bookPrice"
+          />
         </div>
         <div class="mb-3">
           <label for="bImage" class="form-label">Book Image Url:</label>
-          <input type="text" class="form-control" id="bImage" />
+          <input
+            type="text"
+            class="form-control"
+            id="bImage"
+            formControlName="bookImageUrl"
+          />
         </div>
 
         <div class="mb-3">

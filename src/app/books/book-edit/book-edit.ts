@@ -1,18 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Character } from '../character.model';
 import { Book } from '../book.model';
 import { Author } from '../author.model';
 import { AuthorService } from '../../authors/author.service';
 import { CharacterService } from '../../characters/character.service';
 import { BookService } from '../book.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'book-edit',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './book-edit.html',
   styleUrl: './book-edit.css',
 })
-export class BookEdit {
+export class BookEdit implements OnInit {
+  fetchBookId: number = 102;
+
+  myReactiveForm: FormGroup = new FormGroup({
+    bookId: new FormControl(),
+    bookTitle: new FormControl(),
+    author: new FormGroup({
+      authorId: new FormControl(),
+      authorFirstname: new FormControl(),
+      authorLastname: new FormControl(),
+    }),
+    bookCategory: new FormControl(),
+    bookPublished: new FormControl(),
+    bookPrice: new FormControl(),
+    bookImageUrl: new FormControl(),
+  });
+
   selectedCharacterId: number = 0;
   selectedCharacters: Character[] = [];
   newBook: Book = {
@@ -41,6 +58,9 @@ export class BookEdit {
   ngOnInit(): void {
     this.allAuthors = this.authorService.getAllAuthors();
     this.allCharacters = this.characterService.getAllCharacters();
+    let fetchedBook: any = this.bookService.getABook(this.fetchBookId);
+    console.log(fetchedBook);
+    this.myReactiveForm.patchValue(fetchedBook);
   }
 
   addCharacter() {
@@ -55,5 +75,10 @@ export class BookEdit {
       (chars) => chars.characterId == characterId
     );
     this.selectedCharacters.splice(index, 1);
+  }
+
+  handleFormSubmit() {
+    console.log(this.myReactiveForm);
+    console.log(this.myReactiveForm.value);
   }
 }
