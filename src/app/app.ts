@@ -6,9 +6,10 @@ import { CountriesList } from './countries-list/countries-list';
 import { DishList } from './dish-list/dish-list';
 import { MovieList } from './movie-list/movie-list';
 import { StudentList } from './student-list/student-list';
-import { BookList } from "./books/book-list/book-list";
-import { BookAdd } from "./books/book-add/book-add";
-import { BookEdit } from "./books/book-edit/book-edit";
+import { BookList } from './books/book-list/book-list';
+import { BookAdd } from './books/book-add/book-add';
+import { BookEdit } from './books/book-edit/book-edit';
+import { Header } from './header/header';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,9 @@ import { BookEdit } from "./books/book-edit/book-edit";
     StudentList,
     BookList,
     BookAdd,
-    BookEdit
-],
+    BookEdit,
+    Header,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

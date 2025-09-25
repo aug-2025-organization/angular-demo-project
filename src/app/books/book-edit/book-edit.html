@@ -13,17 +13,28 @@
             id="bTitle"
             formControlName="bookTitle"
           />
+          @if(myReactiveForm.get('bookTitle')?.invalid){
+          @if(myReactiveForm.get('bookTitle')?.errors?.['required']){
+          <div class="text-danger text-small">Book Title is required!</div>
+          } @if(myReactiveForm.get('bookTitle')?.errors?.['minlength']){
+          <div class="text-danger text-small">
+            Book Title should be atleast 2 characters in length!
+          </div>
+          } }
         </div>
         <div class="mb-3">
           <label for="bAuthor" class="form-label">Book Author:</label>
           <select class="form-control" id="bAuthor" formControlName="author">
+            <option [ngValue]="null">--select--</option>
             @for(eachAuthor of allAuthors; track $index){
             <option
               [ngValue]="eachAuthor"
-              [selected]="eachAuthor==myReactiveForm.get('author')?.value"
+              [selected]="eachAuthor.authorId==myReactiveForm.get('author')?.get('authorId')?.value"
             >
               {{ eachAuthor.authorFirstname }} {{ eachAuthor.authorLastname }}
+              {{eachAuthor.authorId==myReactiveForm.get('author')?.get('authorId')?.value}}
             </option>
+
             }
           </select>
         </div>
@@ -56,6 +67,9 @@
             id="bPrice"
             formControlName="bookPrice"
           />
+          @if(myReactiveForm.get('bookPrice')?.invalid){
+          <div class="text-danger text-small">Book Price is required!</div>
+          }
         </div>
         <div class="mb-3">
           <label for="bImage" class="form-label">Book Image Url:</label>
@@ -69,9 +83,13 @@
 
         <div class="mb-3">
           <label for="bAuthor" class="form-label">Book Character:</label>
-          <select class="form-control" id="bCharacter">
+          <select
+            class="form-control"
+            id="bCharacter"
+            formControlName="eachSelChar"
+          >
             @for(eachCharacter of allCharacters; track $index){
-            <option value="{{ eachCharacter.characterId }}">
+            <option [ngValue]="eachCharacter">
               {{ eachCharacter.characterFirstname }} {{
               eachCharacter.characterLastname }}
             </option>
@@ -110,7 +128,11 @@
         </div>
       </div>
       <div class="card-footer bg-primary text-white">
-        <button type="submit" class="btn btn-light text-primary mx-2">
+        <button
+          type="submit"
+          class="btn btn-light text-primary mx-2"
+          [disabled]="myReactiveForm.invalid"
+        >
           UPDATE
         </button>
         <button type="reset" class="btn btn-light text-primary mx-2">
