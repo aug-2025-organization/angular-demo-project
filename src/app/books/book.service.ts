@@ -23,6 +23,16 @@ export class BookService {
           characterFirstname: 'Harry',
           characterLastname: 'Potter',
         },
+        {
+          characterId: 202,
+          characterFirstname: 'Ron',
+          characterLastname: 'Weasley',
+        },
+        {
+          characterId: 203,
+          characterFirstname: 'Draco',
+          characterLastname: 'Malfoy',
+        },
       ],
       bookImageUrl:
         'https://images.unsplash.com/photo-1626618012641-bfbca5a31239?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGFycnklMjBwb3R0ZXIlMjBib29rc3xlbnwwfHwwfHx8MA%3D%3D',
@@ -44,6 +54,16 @@ export class BookService {
           characterFirstname: 'Harry',
           characterLastname: 'Potter',
         },
+        {
+          characterId: 202,
+          characterFirstname: 'Ron',
+          characterLastname: 'Weasley',
+        },
+        {
+          characterId: 203,
+          characterFirstname: 'Draco',
+          characterLastname: 'Malfoy',
+        },
       ],
       bookImageUrl:
         'https://images.unsplash.com/photo-1616864814886-60cbfcac88c8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aGFycnklMjBwb3R0ZXIlMjBib29rc3xlbnwwfHwwfHx8MA%3D%3D',
@@ -54,7 +74,7 @@ export class BookService {
     return this.allBooks;
   }
 
-  getABook(bookId: number): Book | undefined {
+  getABook(bookId: number): any {
     return this.allBooks.find((eachBook) => eachBook.bookId == bookId);
   }
 

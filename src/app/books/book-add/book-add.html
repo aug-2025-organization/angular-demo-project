@@ -34,7 +34,7 @@
             class="form-control"
             id="bAuthor"
             name="bookAuthor"
-            [(ngModel)]="newBook.author!.authorId"
+            [(ngModel)]="newBook.author"
             required
           >
             @for(eachAuthor of allAuthors; track $index){

@@ -1,8 +1,8 @@
 <div class="container">
-  <form [formGroup]="myReactiveForm" (ngSubmit)="handleFormSubmit()">
+  <form (ngSubmit)="handleFormSubmit()" #tempForm="ngForm">
     <div class="card">
-      <div class="card-header bg-primary text-white">
-        <h3>EDIT BOOK</h3>
+      <div class="card-header bg-success text-white">
+        <h3>ADD A NEW BOOK HTTP</h3>
       </div>
       <div class="card-body">
         <div class="my-3">
@@ -11,25 +11,36 @@
             type="text"
             class="form-control"
             id="bTitle"
-            formControlName="bookTitle"
+            name="bookTitle"
+            [(ngModel)]="newBook.bookTitle"
+            required
+            minlength="2"
+            maxlength="100"
+            #tempTitle="ngModel"
+            (change)="displayTempTitle(tempTitle)"
           />
-          @if(myReactiveForm.get('bookTitle')?.invalid){
-          @if(myReactiveForm.get('bookTitle')?.errors?.['required']){
-          <div class="text-danger text-small">Book Title is required!</div>
-          } @if(myReactiveForm.get('bookTitle')?.errors?.['minlength']){
+          @if(tempTitle.invalid && tempTitle.touched){ @if(tempTitle.errors !=
+          null && tempTitle.errors['minlength']){
           <div class="text-danger text-small">
-            Book Title should be atleast 2 characters in length!
+            Book Title should be atleast 2 characters!
           </div>
+          } @if(tempTitle.errors != null && tempTitle.errors['required']){
+          <div class="text-danger text-small">Book Title is required!</div>
           } }
         </div>
         <div class="mb-3">
           <label for="bAuthor" class="form-label">Book Author:</label>
-          <select class="form-control" id="bAuthor" formControlName="author">
+          <select
+            class="form-control"
+            id="bAuthor"
+            name="bookAuthor"
+            [(ngModel)]="newBook.author"
+            required
+          >
             @for(eachAuthor of allAuthors; track $index){
-            <option [value]="eachAuthor">
+            <option [ngValue]="eachAuthor">
               {{ eachAuthor.authorFirstname }} {{ eachAuthor.authorLastname }}
             </option>
-
             }
           </select>
         </div>
@@ -38,7 +49,9 @@
           <select
             class="form-control"
             id="bCategory"
-            formControlName="bookCategory"
+            name="bookCategory"
+            [(ngModel)]="newBook.bookCategory"
+            required
           >
             <option value="Fantasy">Fantasy</option>
             <option value="Thriller">Thriller</option>
@@ -51,18 +64,27 @@
             type="date"
             class="form-control"
             id="bPublished"
-            formControlName="bookPublished"
+            name="bookPublished"
+            [(ngModel)]="newBook.bookPublished"
+            #tempPublished="ngModel"
+            required
           />
         </div>
+        @if(tempPublished.invalid && tempPublished.touched){
+        <div class="text-danger text-small">Book Publish Date is required!</div>
+        }
         <div class="mb-3">
           <label for="bPrice" class="form-label">Book Price:</label>
           <input
             type="text"
             class="form-control"
             id="bPrice"
-            formControlName="bookPrice"
+            name="bookPrice"
+            [(ngModel)]="newBook.bookPrice"
+            #tempPrice="ngModel"
+            required
           />
-          @if(myReactiveForm.get('bookPrice')?.invalid){
+          @if(tempPrice.invalid && tempPrice.touched){
           <div class="text-danger text-small">Book Price is required!</div>
           }
         </div>
@@ -72,7 +94,8 @@
             type="text"
             class="form-control"
             id="bImage"
-            formControlName="bookImageUrl"
+            name="bookImage"
+            [(ngModel)]="newBook.bookImageUrl"
           />
         </div>
 
@@ -81,10 +104,11 @@
           <select
             class="form-control"
             id="bCharacter"
-            formControlName="eachSelChar"
+            name="bookCharacter"
+            [(ngModel)]="selectedCharacterId"
           >
             @for(eachCharacter of allCharacters; track $index){
-            <option [value]="eachCharacter">
+            <option value="{{ eachCharacter.characterId }}">
               {{ eachCharacter.characterFirstname }} {{
               eachCharacter.characterLastname }}
             </option>
@@ -93,7 +117,7 @@
           <div class="d-grid">
             <button
               type="button"
-              class="btn btn-primary btn-block my-2"
+              class="btn btn-success btn-block my-2"
               (click)="addCharacter()"
             >
               +
@@ -122,15 +146,15 @@
           </table>
         </div>
       </div>
-      <div class="card-footer bg-primary text-white">
+      <div class="card-footer bg-success text-white">
         <button
           type="submit"
-          class="btn btn-light text-primary mx-2"
-          [disabled]="myReactiveForm.invalid"
+          class="btn btn-light text-success mx-2"
+          [disabled]="tempForm.invalid"
         >
-          UPDATE
+          ADD
         </button>
-        <button type="reset" class="btn btn-light text-primary mx-2">
+        <button type="reset" class="btn btn-light text-success mx-2">
           CLEAR
         </button>
       </div>

@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorService } from '../../authors/author.service';
-import { Author } from '../author.model';
 import { CharacterService } from '../../characters/character.service';
-import { Character } from '../character.model';
-import { Book } from '../book.model';
 import { FormsModule } from '@angular/forms';
-import { BookService } from '../book.service';
 import { Router } from '@angular/router';
+import { Character } from '../models/character.model';
+import { Book } from '../models/book.model';
+import { BookHttpService } from '../book-http.service';
+import { Author } from '../models/author.model';
+import { AuthorHttpService } from '../author-http.service';
+import { CharacterHttpService } from '../character-http.service';
 
 @Component({
-  selector: 'book-add',
+  selector: 'book-add-http',
   imports: [FormsModule],
-  templateUrl: './book-add.html',
-  styleUrl: './book-add.css',
+  templateUrl: './book-add-http.html',
+  styleUrl: './book-add-http.css',
 })
-export class BookAdd implements OnInit {
+export class BookAddHttp implements OnInit {
   selectedCharacterId: number = 0;
   selectedCharacters: Character[] = [];
   newBook: Book = {
@@ -35,26 +37,33 @@ export class BookAdd implements OnInit {
   allCharacters: Character[] = [];
 
   constructor(
-    private authorService: AuthorService,
-    private characterService: CharacterService,
-    private bookService: BookService,
+    private authorHttpService: AuthorHttpService,
+    private characterHttpService: CharacterHttpService,
+    private bookHttpService: BookHttpService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.allAuthors = this.authorService.getAllAuthors();
-    this.allCharacters = this.characterService.getAllCharacters();
+    this.authorHttpService.getAllAuthors().subscribe({
+      next: (response) => (this.allAuthors = response),
+      error: (err) => console.log(err),
+    });
+    this.allCharacters = this.characterHttpService.getAllCharacters();
   }
 
   handleFormSubmit() {
     this.newBook.allCharacters = this.selectedCharacters;
     console.log(this.newBook);
-    this.bookService.addBook(this.newBook);
-    this.router.navigate(['book-home/book-list']);
+
+    this.bookHttpService.addBook(this.newBook).subscribe({
+      next: (response) =>
+        this.router.navigate(['book-home-http/book-list-http']),
+      error: (err) => console.log(err),
+    });
   }
 
   addCharacter() {
-    let fetchedCharacter: any = this.characterService.getACharacter(
+    let fetchedCharacter: any = this.characterHttpService.getACharacter(
       this.selectedCharacterId
     );
     this.selectedCharacters.push(fetchedCharacter);

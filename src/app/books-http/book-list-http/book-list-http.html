@@ -1,0 +1,64 @@
+<div class="container">
+  <h2>LIST OF BOOKS HTTP</h2>
+  <table class="table table-stripped">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>IMAGE</th>
+        <th>TITLE</th>
+        <th>AUTHOR</th>
+        <th>PUBLISHED</th>
+        <th>PRICE</th>
+        <th>DISCOUNTED PRICE</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(eachBook of allBooks; track $index){
+      <tr>
+        <td>{{ eachBook.bookId }}</td>
+        <td>
+          <img [src]="eachBook.bookImageUrl" width="100px" height="80px" />
+        </td>
+        <td>{{ eachBook.bookTitle | uppercase}}</td>
+        <td>
+          {{ eachBook.author?.authorFirstname }} {{
+          eachBook.author?.authorLastname }}
+        </td>
+        <td>{{ eachBook.bookPublished | date: 'shortDate' }}</td>
+        <td>{{ eachBook.bookPrice | currency: 'INR': 'symbol'}}</td>
+        <td>{{ eachBook.bookPrice | discount: 5 | currency: 'INR': 'code'}}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-warning"
+            (click)="viewBook(eachBook.bookId)"
+          >
+            VIEW
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="editBook(eachBook.bookId)"
+          >
+            EDIT
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="deleteBook(eachBook.bookId)"
+          >
+            DELETE
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -3,6 +3,7 @@ import { Book } from '../book.model';
 import { CurrencyPipe, DatePipe, UpperCasePipe } from '@angular/common';
 import { DiscountPipe } from '../../pipes/discount-pipe';
 import { BookService } from '../book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'book-list',
@@ -13,7 +14,7 @@ import { BookService } from '../book.service';
 export class BookList implements OnInit {
   allBooks: Book[] = [];
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadBooks();
@@ -23,9 +24,14 @@ export class BookList implements OnInit {
     this.allBooks = this.bookService.getAllBooks();
   }
 
-  viewBook(bookId: number) {}
+  viewBook(bookId: number) {
+    // here we need to route to book-view
+    this.router.navigate(['book-home/book-view', bookId]);
+  }
 
-  editBook(bookId: number) {}
+  editBook(bookId: number) {
+    this.router.navigate(['book-home/book-edit', bookId]);
+  }
 
   deleteBook(bookId: number) {
     this.bookService.deleteBook(bookId);

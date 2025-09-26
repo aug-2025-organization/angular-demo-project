@@ -10,6 +10,12 @@ import { BookAdd } from './books/book-add/book-add';
 import { BookEdit } from './books/book-edit/book-edit';
 import { NotFound } from './not-found/not-found';
 import { BookHome } from './books/book-home/book-home';
+import { BookView } from './books/book-view/book-view';
+import { BookHomeHttp } from './books-http/book-home-http/book-home-http';
+import { BookListHttp } from './books-http/book-list-http/book-list-http';
+import { BookAddHttp } from './books-http/book-add-http/book-add-http';
+import { BookEditHttp } from './books-http/book-edit-http/book-edit-http';
+import { BookViewHttp } from './books-http/book-view-http/book-view-http';
 
 export const routes: Routes = [
   {
@@ -54,12 +60,37 @@ export const routes: Routes = [
         component: BookAdd,
       },
       {
-        path: 'book-edit',
+        path: 'book-edit/:bid',
         component: BookEdit,
+      },
+      {
+        path: 'book-view/:bid',
+        component: BookView,
       },
     ],
   },
-
+  {
+    path: 'book-home-http',
+    component: BookHomeHttp,
+    children: [
+      {
+        path: 'book-list-http',
+        component: BookListHttp,
+      },
+      {
+        path: 'book-add-http',
+        component: BookAddHttp,
+      },
+      {
+        path: 'book-edit-http/:bid',
+        component: BookEditHttp,
+      },
+      {
+        path: 'book-view-http/:bid',
+        component: BookViewHttp,
+      },
+    ],
+  },
   {
     path: '**',
     component: NotFound,

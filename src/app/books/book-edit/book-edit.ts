@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Character } from '../character.model';
 import { Book } from '../book.model';
 import { Author } from '../author.model';
@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'book-edit',
@@ -21,44 +22,29 @@ import {
   styleUrl: './book-edit.css',
 })
 export class BookEdit implements OnInit {
-  fetchBookId: number = 102;
-  eachSelChar: FormGroup = new FormGroup({
-    characterId: new FormControl(),
-    characterFirstname: new FormControl(),
-    characterLastname: new FormControl(),
-  });
+  fetchedBook: Book = {
+    bookId: 0,
+    bookTitle: '',
+    author: {
+      authorId: 0,
+      authorFirstname: '',
+      authorLastname: '',
+    },
+    bookCategory: '',
+    bookPublished: new Date(),
+    bookPrice: 0,
+    bookImageUrl: '',
+    allCharacters: [],
+  };
 
-  eachSelectedChar: Character = {
+  selectedCharacter: Character = {
     characterId: 0,
     characterFirstname: '',
     characterLastname: '',
   };
-  character: FormGroup = new FormGroup({
-    characterId: new FormControl(),
-    characterFirstname: new FormControl(),
-    characterLastname: new FormControl(),
-  });
+  myReactiveForm: FormGroup = new FormGroup({});
+  eachSelChar: FormGroup = new FormGroup({});
 
-  myReactiveForm: FormGroup = new FormGroup({
-    bookId: new FormControl(),
-    bookTitle: new FormControl('', [
-      Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(100),
-    ]),
-    author: new FormGroup({
-      authorId: new FormControl(),
-      authorFirstname: new FormControl(),
-      authorLastname: new FormControl(),
-    }),
-    bookCategory: new FormControl(),
-    bookPublished: new FormControl(),
-    bookPrice: new FormControl(0, Validators.required),
-    bookImageUrl: new FormControl(),
-    allCharacters: new FormArray([this.character]),
-  });
-
-  selectedCharacterId: number = 0;
   selectedCharacters: Character[] = [];
   newBook: Book = {
     bookId: 0,
@@ -80,36 +66,101 @@ export class BookEdit implements OnInit {
   constructor(
     private authorService: AuthorService,
     private characterService: CharacterService,
-    private bookService: BookService
+    private bookService: BookService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    let bookId = this.activatedRoute.snapshot.paramMap.get('bid');
+    if (bookId != null) {
+      this.fetchedBook = this.bookService.getABook(+bookId);
+    }
+    this.eachSelChar = new FormGroup({
+      characterId: new FormControl(),
+      characterFirstname: new FormControl(),
+      characterLastname: new FormControl(),
+    });
+
+    this.myReactiveForm = new FormGroup({
+      bookId: new FormControl(),
+      bookTitle: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(100),
+      ]),
+      author: new FormGroup({
+        authorId: new FormControl(),
+        authorFirstname: new FormControl(),
+        authorLastname: new FormControl(),
+      }),
+      bookCategory: new FormControl(),
+      bookPublished: new FormControl(),
+      bookPrice: new FormControl(0, Validators.required),
+      bookImageUrl: new FormControl(),
+      allCharacters: new FormArray([]),
+    });
+
     this.allAuthors = this.authorService.getAllAuthors();
     this.allCharacters = this.characterService.getAllCharacters();
     console.log(this.allCharacters);
-    let fetchedBook: any = this.bookService.getABook(this.fetchBookId);
-    this.selectedCharacters = fetchedBook.allCharacters;
-    console.log(fetchedBook);
-    this.myReactiveForm.patchValue(fetchedBook);
+
+    this.selectedCharacters = this.fetchedBook.allCharacters;
+    console.log(this.fetchedBook);
+    this.myReactiveForm.patchValue({
+      bookId: this.fetchedBook.bookId,
+      bookTitle: this.fetchedBook.bookTitle,
+      author: this.fetchedBook.author,
+      bookCategory: this.fetchedBook.bookCategory,
+      bookPublished: this.fetchedBook.bookPublished,
+      bookPrice: this.fetchedBook.bookPrice,
+      bookImageUrl: this.fetchedBook.bookImageUrl,
+    });
+
+    // Clear and re-add allCharacters FormArray
+    const allCharsArray = this.myReactiveForm.get('allCharacters') as FormArray;
+    allCharsArray.clear();
+    this.fetchedBook.allCharacters.forEach((char) => {
+      allCharsArray.push(
+        new FormGroup({
+          characterId: new FormControl(char.characterId),
+          characterFirstname: new FormControl(char.characterFirstname),
+          characterLastname: new FormControl(char.characterLastname),
+        })
+      );
+    });
   }
 
   addCharacter() {
     console.log(this.eachSelChar.value);
-    console.log(this.myReactiveForm.get('author')?.value);
+
+    const charFormGroup = new FormGroup({
+      characterId: new FormControl(this.eachSelChar.value.characterId),
+      characterFirstname: new FormControl(
+        this.eachSelChar.value.characterFirstname
+      ),
+      characterLastname: new FormControl(
+        this.eachSelChar.value.characterLastname
+      ),
+    });
+
+    // Add to FormArray
+    (this.myReactiveForm.get('allCharacters') as FormArray).push(charFormGroup);
     this.selectedCharacters.push(this.eachSelChar.value);
-    this.myReactiveForm.get('allCharacters')?.setValue(this.selectedCharacters);
   }
 
   removeChar(characterId: number) {
-    let index = this.selectedCharacters.findIndex(
-      (chars) => chars.characterId == characterId
+    const allCharsArray = this.myReactiveForm.get('allCharacters') as FormArray;
+    const index = allCharsArray.controls.findIndex(
+      (ctrl) => ctrl.value.characterId === characterId
     );
-    this.selectedCharacters.splice(index, 1);
+
+    if (index !== -1) {
+      allCharsArray.removeAt(index);
+      this.selectedCharacters.splice(index, 1); // Only if you're using this elsewhere
+    }
   }
 
   handleFormSubmit() {
-    console.log(this.myReactiveForm);
     console.log(this.myReactiveForm.value);
-    console.log(this.myReactiveForm.get('bookTitle'));
   }
 }

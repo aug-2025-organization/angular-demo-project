@@ -10,6 +10,7 @@ import { BookList } from './books/book-list/book-list';
 import { BookAdd } from './books/book-add/book-add';
 import { BookEdit } from './books/book-edit/book-edit';
 import { Header } from './header/header';
+import { ObservableDemo } from "./observable-demo/observable-demo";
 
 @Component({
   selector: 'app-root',
@@ -25,7 +26,8 @@ import { Header } from './header/header';
     BookAdd,
     BookEdit,
     Header,
-  ],
+    ObservableDemo
+],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
