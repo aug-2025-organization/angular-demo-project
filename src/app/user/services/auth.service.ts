@@ -40,4 +40,20 @@ export class AuthService {
     let user = this.retrieveUserInfo();
     return user?.allRoles;
   }
+
+  isAdmin(): boolean {
+    let user = this.retrieveUserInfo();
+    if (user?.allRoles.find((role) => role.roleId == 1)) {
+      return true;
+    }
+    return false;
+  }
+
+  isUser(): boolean {
+    let user = this.retrieveUserInfo();
+    if (user?.allRoles.find((role) => role.roleId == 2)) {
+      return true;
+    }
+    return false;
+  }
 }

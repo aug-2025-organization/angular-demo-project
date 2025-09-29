@@ -18,6 +18,7 @@ import { BookEditHttp } from './books-http/book-edit-http/book-edit-http';
 import { BookViewHttp } from './books-http/book-view-http/book-view-http';
 import { Login } from './user/login/login';
 import { Logout } from './user/logout/logout';
+import { authGuard } from './user/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -40,22 +41,27 @@ export const routes: Routes = [
   {
     path: 'counter',
     component: Counter,
+    canActivate: [authGuard],
   },
   {
     path: 'dish-list',
     component: DishList,
+    canActivate: [authGuard],
   },
   {
     path: 'countries',
     component: CountriesList,
+    canActivate: [authGuard],
   },
   {
     path: 'movie-list',
     component: MovieList,
+    canActivate: [authGuard],
   },
   {
     path: 'student-list',
     component: StudentList,
+    canActivate: [authGuard],
   },
   {
     path: 'book-home',
@@ -78,6 +84,7 @@ export const routes: Routes = [
         component: BookView,
       },
     ],
+    canActivate: [authGuard],
   },
   {
     path: 'book-home-http',
@@ -100,6 +107,7 @@ export const routes: Routes = [
         component: BookViewHttp,
       },
     ],
+    canActivate: [authGuard],
   },
   {
     path: '**',
