@@ -1,0 +1,61 @@
+<div class="container">
+  <form (ngSubmit)="handleFormSubmit()" #tempForm="ngForm">
+    <div class="text-danger">{{ errorMessage }}</div>
+    <div class="card">
+      <div class="card-header bg-warning text-white">
+        <h3>LOGIN</h3>
+      </div>
+      <div class="card-body">
+        <div class="my-3">
+          <label for="uName" class="form-label">Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="uName"
+            name="userName"
+            [(ngModel)]="loginUser.name"
+            required
+            minlength="2"
+            maxlength="100"
+            #tempName="ngModel"
+          />
+          @if(tempName.invalid && tempName.touched){ @if(tempName.errors != null
+          && tempName.errors['minlength']){
+          <div class="text-danger text-small">
+            User Name should be atleast 2 characters!
+          </div>
+          } @if(tempName.errors != null && tempName.errors['required']){
+          <div class="text-danger text-small">User Name is required!</div>
+          } }
+        </div>
+        <div class="mb-3">
+          <label for="uPassword" class="form-label">Password:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="uPassword"
+            name="userPassword"
+            [(ngModel)]="loginUser.password"
+            #tempPassword="ngModel"
+            required
+          />
+          @if(tempPassword.invalid && tempPassword.touched){
+          <div class="text-danger text-small">Password is required!</div>
+          }
+        </div>
+      </div>
+      <div class="card-footer bg-warning text-white">
+        <button
+          type="submit"
+          class="btn btn-light text-warning mx-2"
+          [disabled]="tempForm.invalid"
+        >
+          LOGIN
+        </button>
+        <button type="reset" class="btn btn-light text-warning mx-2">
+          CLEAR
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

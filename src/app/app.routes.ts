@@ -16,12 +16,22 @@ import { BookListHttp } from './books-http/book-list-http/book-list-http';
 import { BookAddHttp } from './books-http/book-add-http/book-add-http';
 import { BookEditHttp } from './books-http/book-edit-http/book-edit-http';
 import { BookViewHttp } from './books-http/book-view-http/book-view-http';
+import { Login } from './user/login/login';
+import { Logout } from './user/logout/logout';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'display',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: Login,
+  },
+  {
+    path: 'logout',
+    component: Logout,
   },
   {
     path: 'display',
