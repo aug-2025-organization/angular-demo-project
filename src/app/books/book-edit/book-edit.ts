@@ -14,6 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'book-edit',
@@ -58,6 +59,7 @@ export class BookEdit implements OnInit {
     bookPublished: new Date(),
     bookPrice: 0,
     bookImageUrl: '',
+
     allCharacters: [],
   };
   allAuthors: Author[] = [];
@@ -71,16 +73,6 @@ export class BookEdit implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let bookId = this.activatedRoute.snapshot.paramMap.get('bid');
-    if (bookId != null) {
-      this.fetchedBook = this.bookService.getABook(+bookId);
-    }
-    this.eachSelChar = new FormGroup({
-      characterId: new FormControl(),
-      characterFirstname: new FormControl(),
-      characterLastname: new FormControl(),
-    });
-
     this.myReactiveForm = new FormGroup({
       bookId: new FormControl(),
       bookTitle: new FormControl('', [
@@ -97,8 +89,18 @@ export class BookEdit implements OnInit {
       bookPublished: new FormControl(),
       bookPrice: new FormControl(0, Validators.required),
       bookImageUrl: new FormControl(),
+      eachSelChar: new FormGroup({
+        characterId: new FormControl(),
+        characterFirstname: new FormControl(),
+        characterLastname: new FormControl(),
+      }),
       allCharacters: new FormArray([]),
     });
+
+    let bookId = this.activatedRoute.snapshot.paramMap.get('bid');
+    if (bookId != null) {
+      this.fetchedBook = this.bookService.getABook(+bookId);
+    }
 
     this.allAuthors = this.authorService.getAllAuthors();
     this.allCharacters = this.characterService.getAllCharacters();
@@ -111,7 +113,11 @@ export class BookEdit implements OnInit {
       bookTitle: this.fetchedBook.bookTitle,
       author: this.fetchedBook.author,
       bookCategory: this.fetchedBook.bookCategory,
-      bookPublished: this.fetchedBook.bookPublished,
+      bookPublished: formatDate(
+        this.fetchedBook.bookPublished,
+        'yyyy-MM-dd',
+        'en'
+      ),
       bookPrice: this.fetchedBook.bookPrice,
       bookImageUrl: this.fetchedBook.bookImageUrl,
     });

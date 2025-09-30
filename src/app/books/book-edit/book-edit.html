@@ -26,7 +26,7 @@
           <label for="bAuthor" class="form-label">Book Author:</label>
           <select class="form-control" id="bAuthor" formControlName="author">
             @for(eachAuthor of allAuthors; track $index){
-            <option [value]="eachAuthor">
+            <option [ngValue]="eachAuthor">
               {{ eachAuthor.authorFirstname }} {{ eachAuthor.authorLastname }}
             </option>
 
@@ -84,7 +84,7 @@
             formControlName="eachSelChar"
           >
             @for(eachCharacter of allCharacters; track $index){
-            <option [value]="eachCharacter">
+            <option [ngValue]="eachCharacter">
               {{ eachCharacter.characterFirstname }} {{
               eachCharacter.characterLastname }}
             </option>
